@@ -12,15 +12,18 @@
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
-       vector<int> ans;
-        postorder(root, ans);
-        return ans;
+        vector<int> result;
+        if (root == nullptr) return result;
+        stack<TreeNode*> stack1;
+        stack1.push(root);
+        while(!stack1.empty()) {
+            TreeNode* curr = stack1.top();
+            stack1.pop();
+            result.push_back(curr->val);
+            if(curr->left) stack1.push(curr->left);
+            if(curr->right) stack1.push(curr->right);
+        }
+        reverse(result.begin(), result.end());
+        return result;   
     }
-
-    void postorder(TreeNode* root, vector<int>& ans) {
-        if(root == NULL) return;
-        postorder(root->left, ans);
-        postorder(root->right, ans);
-        ans.push_back(root->val);
-    } 
 };
