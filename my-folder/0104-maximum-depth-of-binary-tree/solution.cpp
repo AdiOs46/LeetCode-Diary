@@ -12,20 +12,17 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        queue<TreeNode*> q;
-        int count=0;
-        if(!root) return 0;
-        q.push(root);
-        while(!q.empty()) {
-            int qSize = q.size();
-            for(int i=0; i<qSize; i++) {
-                TreeNode* curr = q.front();
-                if(curr->left) q.push(curr->left);
-                if(curr->right) q.push(curr->right);
-                q.pop();
-            }
-            count++;
-        }
-        return count;
+        if(!root) return NULL;
+        int maxDepth = 1;
+        findDepth(root, 1, maxDepth);
+        return maxDepth;
+    }
+
+    void findDepth(TreeNode* root, int currDepth, int& maxDepth) {
+        if(!root) return;
+
+        maxDepth = max(currDepth, maxDepth);
+        findDepth(root->left, currDepth+1, maxDepth);
+        findDepth(root->right, currDepth+1, maxDepth);
     }
 };
