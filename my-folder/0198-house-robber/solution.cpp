@@ -1,18 +1,21 @@
 class Solution {
 public:
-    int helper(int index, vector<int>& nums, vector<int>& dp) {
-        if (index >= nums.size()) return 0;
-
-        if(dp[index] != -1) return dp[index];
-
-        int includeCurrent = nums[index] + helper(index + 2, nums, dp);
-        int excludeCurrent = helper(index + 1, nums, dp);
-
-        return dp[index] = max(includeCurrent, excludeCurrent);
-    }
-
     int rob(vector<int>& nums) {
-        vector<int> dp(nums.size(), -1);
-        return helper(0, nums, dp);
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        
+        int prev = nums[0];
+        int prev2 = 0;
+
+        for(int i=1; i<n; i++) {
+            int take = nums[i];
+            if(i > 1) take += prev2;
+            
+            int nontake = prev;
+            int curri = max(take, nontake);
+            prev2 = prev;
+            prev = curri;
+        }
+        return prev;
     }
 };
