@@ -1,9 +1,18 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
-        for (int i = 0; i < nums.size()-1; i+=2) {
-            if (nums[i] != nums[i+1]) return nums[i];
+        int n = nums.size();
+        int low = 0, high = n-1;
+
+        while(low < high) {
+            int mid = (low + high) /2;
+            
+            if((mid % 2 == 0 && nums[mid+1] == nums[mid]) || (mid % 2 == 1 && nums[mid-1] == nums[mid]))
+                low = mid + 1;
+            else 
+                high = mid;
         }
-        return nums[nums.size()-1];
+
+        return nums[low];
     }
 };
